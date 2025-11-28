@@ -1,0 +1,15 @@
+{
+  "terminal.integrated.profiles.linux": {
+    "ros2": {
+      "path": "bash",
+      "args": [
+        "-c",
+        "source install/setup.bash && bash"
+      ],
+      "icon": "gear",
+      "color": "terminal.ansiGreen",
+      "overrideName": true
+    }
+  },
+  "terminal.integrated.defaultProfile.linux": "ros2",
+}
