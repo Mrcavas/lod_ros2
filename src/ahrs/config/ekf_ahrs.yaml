@@ -1,0 +1,37 @@
+### ekf_ahrs.yaml ###
+ekf_filter_node:
+  ros__parameters:
+    # 1. General Configuration
+    frequency: 80.0
+    two_d_mode: false
+    publish_tf: true
+    
+    # 2. Frame Configuration
+    map_frame: map              # Global frame (GPS/Map)
+    odom_frame: odom            # Local smooth frame (Start position)
+    base_link_frame: base_link  # The robot frame
+    world_frame: odom           # The frame EKF is estimating relative to
+
+    # 3. Sensor Configuration
+    # We are using the output from the Madgwick filter
+    imu0: /imu/data
+
+    # 4. The Matrix (Which data to use?)
+    # Order: 
+    # [ X,    Y,     Z, 
+    #   Roll, Pitch, Yaw, 
+    #   d_X,  d_Y,   d_Z, 
+    #   d_R,  d_P,   d_Y, 
+    #   dd_X, dd_Y,  dd_Z ]
+    
+    imu0_config: [false, false, false,
+                  true,  true,  true,
+                  false, false, false,
+                  true,  true,  true,
+                  false, false, false]
+
+    # 5. Sensor Settings
+    imu0_differential: false
+    imu0_relative: false
+    imu0_queue_size: 50
+    imu0_remove_gravitational_acceleration: true

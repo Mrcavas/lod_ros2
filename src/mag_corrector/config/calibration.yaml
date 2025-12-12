@@ -1,0 +1,11 @@
+mag_corrector:
+  ros__parameters:
+    # Hard Iron (x, y, z) (µT)
+    hard_iron_offset: [29.62967, -31.19465, 7.57400]
+    
+    # Soft Iron (Flattened 3x3 matrix: r1c1, r1c2, r1c3, r2c1...)
+    soft_iron_matrix: [
+      1.044709, -0.010396, 0.046158,
+      -0.010396, 0.925158, 0.017547,
+      0.046158, 0.017547, 1.037144
+    ]
