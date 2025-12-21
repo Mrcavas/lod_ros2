@@ -1,0 +1,21 @@
+{
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "**/flutter/ephemeral": true,
+    "**/Flutter/ephemeral": true,
+    "**/.symlinks": true,
+    "**/.plugin_symlinks": true,
+    "**/*.meta": true,
+    "**/*.svg": true
+  },
+  "hide-files.files": [],
+  "files.associations": {
+    "Tokens": "raw",
+    "*.css": "tailwindcss",
+    "imuread.h": "c"
+  }
+}
