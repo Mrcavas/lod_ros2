@@ -22,7 +22,7 @@ def generate_launch_description():
             parameters=[
                 {"i2c_address": 0x68},
                 {"frame_id": "imu_icm20948"},
-                {"pub_rate": 80},
+                {"pub_rate": 100},
             ],
             output="screen",
         ),
@@ -52,14 +52,9 @@ def generate_launch_description():
                     "use_mag": True,
                     "publish_tf": True,
                     "world_frame": "enu",
-                    # "gain": 0.3,
+                    "publish_debug_topics": True,
                 }
             ],
-            # remappings=[
-            #     ("/imu/data_raw", "/imu/data_raw"),  # Check your driver topic name!
-            #     ("/imu/mag", "/imu/mag"),  # Check your driver topic name!
-            #     ("/imu/data", "/imu/data"),
-            # ],
         ),
         # 4. Robot Localization
         Node(

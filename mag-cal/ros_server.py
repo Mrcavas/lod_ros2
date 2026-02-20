@@ -1,4 +1,3 @@
-import sys
 import threading
 import asyncio
 import struct
@@ -112,7 +111,7 @@ async def main():
     t = threading.Thread(target=ros_spin_thread, args=(node,), daemon=True)
     t.start()
 
-    print(f"Starting WebSocket server on ws://localhost:{WS_PORT}{WS_PATH}")
+    print(f"Starting WebSocket server on ws://0.0.0.0:{WS_PORT}{WS_PATH}")
     print(f"Listening for ROS topic: {ROS_TOPIC}...")
 
     # Start the WebSocket Server

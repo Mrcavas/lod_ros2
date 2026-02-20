@@ -26,6 +26,14 @@ class ICM20948Node(Node):
         self.frame_id = frame_id
         self.pub_rate = pub_rate
 
+        self.gyro_bias_x = -93.51
+        self.gyro_bias_y = -27.23
+        self.gyro_bias_z = -53.68
+
+        self.ACCEL_SCALE = 16384.0
+        self.GYRO_SCALE = 131.0
+        self.DEG_TO_RAD = math.pi / 180.0
+
         # IMU instance
         self.imu = qwiic_icm20948.QwiicIcm20948(address=self.i2c_addr)
         if not self.imu.connected:
@@ -51,21 +59,30 @@ class ICM20948Node(Node):
             if self.imu.dataReady():
                 self.imu.getAgmt()
 
+                gx = self.imu.gxRaw - self.gyro_bias_x
+                gy = self.imu.gyRaw - self.gyro_bias_y
+                gz = self.imu.gzRaw - self.gyro_bias_z
+                ax = self.imu.axRaw
+                ay = self.imu.ayRaw
+                az = self.imu.azRaw
+
                 imu_msg.header.stamp = self.get_clock().now().to_msg()
                 imu_msg.header.frame_id = self.frame_id
-                imu_msg.linear_acceleration.x = self.imu.axRaw * 9.81 / 16348.0
-                imu_msg.linear_acceleration.y = self.imu.ayRaw * 9.81 / 16348.0
-                imu_msg.linear_acceleration.z = self.imu.azRaw * 9.81 / 16348.0
-                imu_msg.angular_velocity.x = self.imu.gxRaw * math.pi / (131 * 180)
-                imu_msg.angular_velocity.y = self.imu.gyRaw * math.pi / (131 * 180)
-                imu_msg.angular_velocity.z = self.imu.gzRaw * math.pi / (131 * 180)
+
+                imu_msg.linear_acceleration.x = ax * 9.81 / self.ACCEL_SCALE
+                imu_msg.linear_acceleration.y = ay * 9.81 / self.ACCEL_SCALE
+                imu_msg.linear_acceleration.z = az * 9.81 / self.ACCEL_SCALE
+
+                imu_msg.angular_velocity.x = gx * self.DEG_TO_RAD / self.GYRO_SCALE
+                imu_msg.angular_velocity.y = gy * self.DEG_TO_RAD / self.GYRO_SCALE
+                imu_msg.angular_velocity.z = gz * self.DEG_TO_RAD / self.GYRO_SCALE
                 imu_msg.orientation_covariance[0] = -1
 
                 mag_msg.header.stamp = imu_msg.header.stamp
                 mag_msg.header.frame_id = self.frame_id
                 mag_msg.magnetic_field.x = self.imu.mxRaw * 1e-6 * 0.15
-                mag_msg.magnetic_field.y = self.imu.myRaw * 1e-6 * 0.15
-                mag_msg.magnetic_field.z = self.imu.mzRaw * 1e-6 * 0.15
+                mag_msg.magnetic_field.y = -self.imu.myRaw * 1e-6 * 0.15
+                mag_msg.magnetic_field.z = -self.imu.mzRaw * 1e-6 * 0.15
         except OSError:
             self.logger.warn("Lost connection to ICM20948")
 
