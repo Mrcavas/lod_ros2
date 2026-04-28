@@ -35,7 +35,7 @@ class ICM20948Node(Node):
         self.DEG_TO_RAD = math.pi / 180.0
 
         # IMU instance
-        self.imu = qwiic_icm20948.QwiicIcm20948(address=self.i2c_addr)
+        self.imu = qwiic_icm20948.QwiicIcm20948(address=self.i2c_addr, iBus=0)
         if not self.imu.connected:
             self.logger.info(
                 "The Qwiic ICM20948 device isn't connected to the system. Please check your connection."
@@ -43,6 +43,9 @@ class ICM20948Node(Node):
         self.imu.begin()
         self.imu.enableDlpfAccel(True)
         self.imu.enableDlpfGyro(True)
+
+        self.imu.setDLPFcfgAccel(qwiic_icm20948.acc_d50bw4_n68bw8)
+        self.imu.setDLPFcfgGyro(qwiic_icm20948.gyr_d51bw2_n73bw3)
 
         # Publishers
         self.imu_pub_ = self.create_publisher(sensor_msgs.msg.Imu, "/imu/data_raw", 10)

@@ -2,7 +2,7 @@
 ekf_filter_node:
   ros__parameters:
     # 1. General Configuration
-    frequency: 100.0
+    frequency: 50.0
     two_d_mode: false
     publish_tf: true
     

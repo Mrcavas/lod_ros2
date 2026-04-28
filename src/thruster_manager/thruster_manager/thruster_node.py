@@ -43,10 +43,10 @@ class ThrusterManager(Node):
         super().__init__("thruster_manager")
 
         # --- CONFIGURATION ---
-        self.motor_pins = [26, 19, 13, 6, 5]
+        self.motor_pins = [5, 6, 26, 19, 13]
 
         # DIRECTION: 1.0 or -1.0
-        self.motor_dirs = [1.0, 1.0, -1.0, 1.0, -1.0]
+        self.motor_dirs = [1.0, -1.0, -1.0, -1.0, 1.0]
 
         # SCALING: Tune these to balance your motors!
         # Example: If motor 0 is weak, set to 1.05. If motor 1 is too strong, set to 0.9.

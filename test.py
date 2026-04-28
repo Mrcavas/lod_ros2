@@ -35,7 +35,7 @@ class EscDriver:
         self.stop()
 
 
-driver = EscDriver([5, 6, 13, 19, 26])
+driver = EscDriver([5, 6, 26, 19, 13])
 
 driver.arm()
 

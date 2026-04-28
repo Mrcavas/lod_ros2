@@ -22,7 +22,7 @@ def generate_launch_description():
             parameters=[
                 {"i2c_address": 0x68},
                 {"frame_id": "imu_icm20948"},
-                {"pub_rate": 100},
+                {"pub_rate": 50},
             ],
             output="screen",
         ),
@@ -52,11 +52,18 @@ def generate_launch_description():
                     "use_mag": True,
                     "publish_tf": True,
                     "world_frame": "enu",
-                    "publish_debug_topics": True,
+                    # "gain": 0.15,
                 }
             ],
         ),
-        # 4. Robot Localization
+        # 4. Depth & temp sensor
+        Node(
+            package="ms5837_bar_ros",
+            executable="bar02_node",
+            name="bar02_component",
+            output="screen",
+        ),
+        # 5. Robot Localization
         Node(
             package="robot_localization",
             executable="ekf_node",

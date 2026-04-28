@@ -12,7 +12,7 @@ import websockets
 # If you can configure the tool's port, change this to 8080 or 9090.
 WS_PORT = 8080
 WS_PATH = "/ws"
-ROS_TOPIC = "/imu/mag"
+ROS_TOPIC = "/imu/mag_raw"
 
 
 class MagBridgeNode(Node):
